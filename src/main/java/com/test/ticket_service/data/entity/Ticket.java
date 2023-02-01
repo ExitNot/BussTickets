@@ -1,4 +1,4 @@
-package com.test.ticketservice.data.entity;
+package com.test.ticket_service.data.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,14 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.Date;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tickets")
 public class Ticket {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -28,22 +28,18 @@ public class Ticket {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(cascade = CascadeType.REMOVE, optional = false, orphanRemoval = true)
-    @JoinColumn(name = "payment_id", nullable = false, unique = true)
-    private Payment payment;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", nullable = false)
-    private Date date;
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "payment_id", unique = true)
+    private Payment payment;
 
     public Ticket() {
     }
 
-    public Ticket(Route route, User user, Payment payment, Date date) {
+    public Ticket(Route route, User user, Payment payment) {
         this.route = route;
         this.user = user;
         this.payment = payment;
-        this.date = date;
     }
 
     public Long getId() {
@@ -76,13 +72,5 @@ public class Ticket {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }

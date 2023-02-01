@@ -1,4 +1,4 @@
-package com.test.ticketservice.data.entity;
+package com.test.ticket_service.data.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,12 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="payments")
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -25,15 +27,15 @@ public class Payment {
     private Double price;
 
     @Column(name = "payment_status", nullable = false, length = 10)
-    private String payment_status;
+    private String paymentStatus;
 
     public Payment() {
     }
 
-    public Payment(User user, Double price, String payment_status) {
+    public Payment(User user, Double price, String paymentStatus) {
         this.user = user;
         this.price = price;
-        this.payment_status = payment_status;
+        this.paymentStatus = paymentStatus;
     }
 
     public Long getId() {
@@ -60,11 +62,11 @@ public class Payment {
         this.price = price;
     }
 
-    public String getPayment_status() {
-        return payment_status;
+    public String getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setPayment_status(String payment_status) {
-        this.payment_status = payment_status;
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

@@ -1,4 +1,4 @@
-package com.test.ticketservice.data.entity;
+package com.test.ticket_service.data.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,23 +8,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name="routes")
 public class Route {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.REMOVE, optional = false)
-    @JoinColumn(name = "from", nullable = false)
-    private Route from;
+    @JoinColumn(name = "s_from", nullable = false)
+    private Station from;
 
     @ManyToOne(cascade = CascadeType.REMOVE, optional = false)
-    @JoinColumn(name = "to", nullable = false)
-    private Route to;
+    @JoinColumn(name = "s_to", nullable = false)
+    private Station to;
 
     @Column(name = "departure", nullable = false)
     private Timestamp departure;
@@ -38,7 +40,7 @@ public class Route {
     public Route() {
     }
 
-    public Route(Route from, Route to, Timestamp departure, Double price, Integer avail_cnt) {
+    public Route(Station from, Station to, Timestamp departure, Double price, Integer avail_cnt) {
         this.from = from;
         this.to = to;
         this.departure = departure;
@@ -54,19 +56,19 @@ public class Route {
         this.id = id;
     }
 
-    public Route getFrom() {
+    public Station getFrom() {
         return from;
     }
 
-    public void setFrom(Route from) {
+    public void setFrom(Station from) {
         this.from = from;
     }
 
-    public Route getTo() {
+    public Station getTo() {
         return to;
     }
 
-    public void setTo(Route to) {
+    public void setTo(Station to) {
         this.to = to;
     }
 
