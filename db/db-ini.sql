@@ -21,9 +21,7 @@ CREATE TABLE users (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 --                    password VARCHAR(100) NOT NULL, -- hashed pwd in SHA-256
                     name VARCHAR NOT NULL,
                     surname VARCHAR NOT NULL,
-                    phone_number VARCHAR(15) UNIQUE NOT NULL,
-                    email VARCHAR(30) UNIQUE NOT NULL,
-                    birth_date DATE NOT NULL);
+                    middlename VARCHAR NOT NULL);
 
 CREATE TABLE payments (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                     user_id INT REFERENCES users(id),
@@ -43,9 +41,7 @@ CREATE TABLE routes (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 CREATE TABLE tickets (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                     route_id INT REFERENCES routes(id),
                     user_id INT REFERENCES users(id),
-                    payment_id INT REFERENCES payments(id),
-                    departure_date TIMESTAMP NOT NULL,
-                    payment_status VARCHAR(10) NOT NULL);
+                    payment_id INT REFERENCES payments(id));
 
 
 --------
@@ -53,9 +49,9 @@ CREATE TABLE tickets (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 --------
 
 INSERT INTO users  -- temporary values for dev process --
-    (name, surname, phone_number, email, birth_date)
+    (name, surname, middlename)
 VALUES
-    ('User', 'User', '+222222222222', 'unnamed@gmail.com', '1990-11-29');
+    ('User', 'User', 'User');
 
 INSERT INTO stations
     (name)
@@ -65,5 +61,10 @@ VALUES
 INSERT INTO routes
     (s_from, s_to, departure, price, avail_cnt)
 VALUES
-    (1, 2, '12:30:00', 20.0, 50),
-    (1, 3, '14:40:00', 25.0, 50);
+    (1, 2, '12:30:00', 20.5, 50),
+    (1, 3, '14:40:00', 25.5, 50);
+
+insert into tickets
+	(route_id, user_id, payment_id)
+values
+	(1, 1, null)
